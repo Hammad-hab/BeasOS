@@ -1,5 +1,13 @@
 #!/bin/bash
 # new for fatdog style kernel
+echo "Checking for improper curl issues..."
+if curl 2>&1 | grep -q "no version information available"; then
+	echo "Curl issue detected, copying libcurl..."
+    cp /usr/lib/x86_64-linux-gnu/libcurl.so.4.6.0 /usr/lib/libcurl.so.4.6.0
+    ln -sf libcurl.so.4.6.0 /usr/lib/libcurl.so.4
+else 
+	echo "No curl issue detected. Continuing to 3builddistro"
+fi
 
 export LANG=C #faster.
 export BUILDSYS=yes
